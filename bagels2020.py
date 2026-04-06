@@ -39,21 +39,21 @@ clues would be Fermi Pico.'''.format(NUM_DIGITS))
                 print('Guess #{}: '.format(numGuesses))
                 guess = input('> ')
 
-                clues = getClues(guess, secretNum)
-                print(clues)
-                numGuesses += 1
+            clues = getClues(guess, secretNum)
+            print(clues)
+            numGuesses += 1
 
-                if guess == secretNum:
-                    break # They're correct, so break out of this loop.
-                if numGuesses > MAX_GUESSES:
-                    print('You ran out of guesses.')
-                    print('The answer was {}.'.format(secretNum))
+            if guess == secretNum:
+                break # They're correct, so break out of this loop.
+            if numGuesses > MAX_GUESSES:
+                print('You ran out of guesses.')
+                print('The answer was {}.'.format(secretNum))
 
-                # Ask player if they want to play again.
-                print('Do you want to play again? (yes or no)')
-                if not input('> ').lower().startswith('y'):
-                    break
-            print('Thanks for playing!')
+        # Ask player if they want to play again.
+        print('Do you want to play again? (yes or no)')
+        if not input('> ').lower().startswith('y'):
+            break
+    print('Thanks for playing!')
 
 
 def getSecretNum():
