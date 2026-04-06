@@ -8,7 +8,7 @@ Tags: short, game, puzzle"""
 import random
 
 NUM_DIGITS = 3 # (!) Try setting this to 1 or 10
-MAX_GUESSES = 10 # (!) Try setting this to 1 or 100
+MAX_GUESSES = 100 # (!) Try setting this to 1 or 100
 
 
 def main():
@@ -50,8 +50,8 @@ clues would be Fermi Pico.'''.format(NUM_DIGITS))
                 print('The answer was {}.'.format(secretNum))
 
         # Ask player if they want to play again.
-        print('Do you want to play again? (yes or no)')
-        if not input('> ').lower().startswith('y'):
+        print('\nDo you want to play again? (yes or no)')
+        if not input('[?] > ').lower().startswith('y'):
             break
     print('Thanks for playing!')
 
