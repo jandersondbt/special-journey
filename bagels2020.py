@@ -26,9 +26,9 @@ By Al Sweigart al@inventwithpython.com
 I am thinking of a {NUM_DIGITS}-digit number with no repeated digits.
 Try to guess what it is. Here are some clues:
 When I say:     That means:
-Pico            One digit is correct but in the wrong position.
-Fermi           One digit is correct and in the right position.
-Bagels          No digit is correct.
+{GREEN}Pico{RESET}            One digit is correct but in the wrong position.
+{YELLOW}Fermi{RESET}           One digit is correct and in the right position.
+{RED}Bagels{RESET}          No digit is correct.
 
 For example, if the secret number was 248 and your guess was 843, the
 clues would be Fermi Pico.''')
@@ -46,7 +46,7 @@ clues would be Fermi Pico.''')
             # Keep looping until they enter a valid guess:
             while len(guess) != NUM_DIGITS or not guess.isdecimal():
                 print('Guess #{}: '.format(numGuesses))
-                guess = input('> ')
+                guess = input('> ') # While length of guess is different from the number of digits (idst 3) or not a number
 
                 
             clues = getClues(guess, secretNum)
