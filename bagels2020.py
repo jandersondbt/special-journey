@@ -8,14 +8,22 @@ Tags: short, game, puzzle"""
 import random
 
 NUM_DIGITS = 3 # (!) Try setting this to 1 or 10
-MAX_GUESSES = 100 # (!) Try setting this to 1 or 100
+MAX_GUESSES = 10 # (!) Try setting this to 1 or 100
 
+# FORMATTING STUFF
+RED = '\033[31m'
+BLUE = '\033[34m'
+GREEN = '\033[32m'
+YELLOW = '\033[33m'
+
+RESET = '\033[0m'
+UNDERLINE = '\033[33m'
 
 def main():
-    print('''Bagels, a deductive logic game.
+    print(f'''Bagels, a deductive logic game.
 By Al Sweigart al@inventwithpython.com
 
-I am thinking of a {}-digit number with no repeated digits.
+I am thinking of a {NUM_DIGITS}-digit number with no repeated digits.
 Try to guess what it is. Here are some clues:
 When I say:     That means:
 Pico            One digit is correct but in the wrong position.
@@ -23,22 +31,24 @@ Fermi           One digit is correct and in the right position.
 Bagels          No digit is correct.
 
 For example, if the secret number was 248 and your guess was 843, the
-clues would be Fermi Pico.'''.format(NUM_DIGITS))
+clues would be Fermi Pico.''')
 
     while True: # Main game loop.
+        
         # This stores the secret number the player needs to guess:
         secretNum = getSecretNum()
         print('I have thought up a number.')
-        print(' You have {} guesses to get it.'.format(MAX_GUESSES))
+        print(f' You have {YELLOW}{MAX_GUESSES} guesses{RESET} to get it.')
 
         numGuesses = 1
         while numGuesses <= MAX_GUESSES:
-            guess = ''
+            guess = '' # While len is 0
             # Keep looping until they enter a valid guess:
             while len(guess) != NUM_DIGITS or not guess.isdecimal():
                 print('Guess #{}: '.format(numGuesses))
                 guess = input('> ')
 
+                
             clues = getClues(guess, secretNum)
             print(clues)
             numGuesses += 1
@@ -79,12 +89,12 @@ def getClues(guess, secretNum):
     for i in range(len(guess)):
         if guess[i] == secretNum[i]:
             # A correct digit is in the correct place.
-            clues.append('Farmi')
+            clues.append(YELLOW + 'Farmi' + RESET)
         elif guess[i] in secretNum:
             # A correct digit is in the incorrect place.
-            clues.append('Pico')
+            clues.append(GREEN + 'Pico' + RESET)
     if len(clues) == 0:
-        return 'Bagels' # There are no correct digits at all.
+        return RED + 'Bagels' + RESET # There are no correct digits at all.
     else:
         # Sort the clues
         # doesn't give information away
