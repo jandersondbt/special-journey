@@ -42,22 +42,22 @@ clues would be Fermi Pico.''')
 
         numGuesses = 1
         while numGuesses <= MAX_GUESSES:
-            guess = '' # Actually, guess is simply empty there because it's supposed for the user to fill in in each iteration... I think... 
+            guess = '' # Start empty (me)
             # Keep looping until they enter a valid guess: 
             while len(guess) != NUM_DIGITS or not guess.isdecimal():
                 print(f'Guess #{numGuesses}: ')
-                guess = input('> ') # While length of guess is different from the number of digits (idst 3) or not a number
-
+                guess = input('> ') #
+                
             #print(guess)           
-            clues = getClues(guess, secretNum) # CLues are equal to a clue retriever function ( iguess) asking for two parameters guess and secret number
+            clues = getClues(guess, secretNum) # Farmi, pico bagels
             print(clues) # It checks for bagels etc...
-            numGuesses += 1 # Here it seems that th eguesses value increase 
+            numGuesses += 1 # Here where the guesses value increase 
 
             if guess == secretNum:
                 break # They're correct, so break out of this loop.
             if numGuesses > MAX_GUESSES:
                 print('You ran out of guesses.')
-                print('The answer was {}.'.format(secretNum))
+                print(f'The answer was {secretNum}.')
 
         # Ask player if they want to play again.
         print('\nDo you want to play again? (yes or no)')
