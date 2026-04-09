@@ -8,6 +8,7 @@ Tags: short, game, puzzle"""
 import random
 import time
 import pygame
+import os
 
 NUM_DIGITS = 3 # (!) Try setting this to 1 or 10
 MAX_GUESSES = 10 # (!) Try setting this to 1 or 100
@@ -78,10 +79,11 @@ def main():
         print(f"Played about {elapsed:.2f} seconds.")
 
     except KeyboardInterrupt:
+        os.system('clear')
         print('\nGame interrupted...Thanks for playing!')
         elapsed = time.time() - start
         print(f"Played about {elapsed:.2f} seconds.")
-
+        print(f"You guessed around {numGuesses} times")
         
 
 
