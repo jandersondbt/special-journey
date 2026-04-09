@@ -6,6 +6,8 @@ Computer games with Python" https://nostarch.com/inventwithpython
 Tags: short, game, puzzle"""
 
 import random
+import time
+import pygame
 
 NUM_DIGITS = 3 # (!) Try setting this to 1 or 10
 MAX_GUESSES = 10 # (!) Try setting this to 1 or 100
@@ -19,53 +21,71 @@ YELLOW = '\033[33m'
 RESET = '\033[0m'
 UNDERLINE = '\033[33m'
 
+# AUDIO STUFF
+pygame.mixer.init()
+pygame.mixer.music.load("/home/jandersonxyz/Temp/xyz/others/recycling_really_is_a_concept.flac")
+pygame.mixer.music.play(-1) # Loop
+
+start = time.time()
+
 def main():
-    print(f'''Bagels, a deductive logic game.
-By Al Sweigart al@inventwithpython.com
+    try:
+        print(f'''Bagels, a deductive logic game.
+    By Al Sweigart al@inventwithpython.com
 
-I am thinking of a {NUM_DIGITS}-digit number with no repeated digits.
-Try to guess what it is. Here are some clues:
-When I say:     That means:
-{GREEN}Pico{RESET}            One digit is correct but in the wrong position.
-{YELLOW}Fermi{RESET}           One digit is correct and in the right position.
-{RED}Bagels{RESET}          No digit is correct.
+    I am thinking of a {NUM_DIGITS}-digit number with no repeated digits.
+    Try to guess what it is. Here are some clues:
+    When I say:     That means:
+    {GREEN}Pico{RESET}            One digit is correct but in the wrong position.
+    {YELLOW}Fermi{RESET}           One digit is correct and in the right position.
+    {RED}Bagels{RESET}          No digit is correct.
 
-For example, if the secret number was 248 and your guess was 843, the
-clues would be Fermi Pico.''')
+    For example, if the secret number was 248 and your guess was 843, the
+    clues would be Fermi Pico.''')
 
-    while True: # Main game loop.
+        while True: # Main game loop.
+            
+            # This stores the secret number the player needs to guess:
+            secretNum = getSecretNum()
+            print('I have thought up a number.')
+            print(f' You have {YELLOW}{MAX_GUESSES} guesses{RESET} to get it.')
+
+            numGuesses = 1
+            while numGuesses <= MAX_GUESSES:
+                guess = '' # Start empty (me)
+                # Keep looping until they enter a valid guess: 
+                while len(guess) != NUM_DIGITS or not guess.isdecimal():
+                    print(f'Guess #{numGuesses}: ')
+                    guess = input('> ') #
+                    
+                #print(guess)           
+                clues = getClues(guess, secretNum) # Farmi, pico bagels
+                print(clues) # It checks for bagels etc...
+                numGuesses += 1 # Here where the guesses value increase 
+
+                if guess == secretNum:
+                    break # They're correct, so break out of this loop.
+                if numGuesses > MAX_GUESSES:
+                    print('You ran out of guesses.')
+                    print(f'The answer was {secretNum}.')
+
+            # Ask player if they want to play again.
+            print('\nDo you want to play again? (yes or no)')
+            if not input('[?] > ').lower().startswith('y'):
+                break
+        print('Thanks for playing!')
+        elapsed = time.time() - start
+        print(f"Played about {elapsed:.2f} seconds.")
+
+    except KeyboardInterrupt:
+        print('\nGame interrupted...Thanks for playing!')
+        elapsed = time.time() - start
+        print(f"Played about {elapsed:.2f} seconds.")
+
         
-        # This stores the secret number the player needs to guess:
-        secretNum = getSecretNum()
-        print('I have thought up a number.')
-        print(f' You have {YELLOW}{MAX_GUESSES} guesses{RESET} to get it.')
-
-        numGuesses = 1
-        while numGuesses <= MAX_GUESSES:
-            guess = '' # Start empty (me)
-            # Keep looping until they enter a valid guess: 
-            while len(guess) != NUM_DIGITS or not guess.isdecimal():
-                print(f'Guess #{numGuesses}: ')
-                guess = input('> ') #
-                
-            #print(guess)           
-            clues = getClues(guess, secretNum) # Farmi, pico bagels
-            print(clues) # It checks for bagels etc...
-            numGuesses += 1 # Here where the guesses value increase 
-
-            if guess == secretNum:
-                break # They're correct, so break out of this loop.
-            if numGuesses > MAX_GUESSES:
-                print('You ran out of guesses.')
-                print(f'The answer was {secretNum}.')
-
-        # Ask player if they want to play again.
-        print('\nDo you want to play again? (yes or no)')
-        if not input('[?] > ').lower().startswith('y'):
-            break
-    print('Thanks for playing!')
 
 
+         
 def getSecretNum():
     """Returns a string made up of NUM_DIGITS unique random digits."""
     numbers = list('0123456789') # Create a list of digits 0 to 9
